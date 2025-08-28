@@ -1,4 +1,4 @@
-# everyonetogo
+
 # Hi! I'm Everyonetogo 
 
 I am learning Python 🐍.  
