@@ -12,5 +12,7 @@ A command-line calculator that can:
 - Subtract
 - Multiply
 - Divide
+- Has a simple but clean UI
+  
 
-Feel free to explore the code and try it out!
+Feel free to explore the code and try it out I would love recomendations on how to improve
