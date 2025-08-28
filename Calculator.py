@@ -1,44 +1,52 @@
 import tkinter as tk
 
-
-#Root window
+# -------------------------------
+# Root window
+# -------------------------------
 root = tk.Tk()
 root.title("Calculator")
-root.geometry("300x200")
+root.geometry("350x250")
 root.resizable(False, False)
 root.configure(cursor="circle")
 
 
 
-# Layout
+
+
+# -------------------------------
+# Layout configuration
+# -------------------------------
 for i in range(4):
     root.grid_columnconfigure(i, weight=1)
 
+# Entry fields
 entry1 = tk.Entry(root, justify="center")
 entry1.grid(row=0, column=0, columnspan=4, pady=5, sticky="ew")
 
 entry2 = tk.Entry(root, justify="center")
 entry2.grid(row=1, column=0, columnspan=4, pady=5, sticky="ew")
 
+# Result display
 result_label = tk.Label(root, text="Result will show here", anchor="center")
 result_label.grid(row=2, column=0, columnspan=4, pady=5, sticky="ew")
 
-entry1.config(bg="#f0f0f0", font=("Arial", 10, "bold"))
-entry2.config(bg="#f0f0f0", font=("Arial", 10, "bold"))
+# Styling
+entry1.config(bg="#f0f0f0", font=("Calibri", 10, "bold"))
+entry2.config(bg="#f0f0f0", font=("Calibri", 10, "bold"))
 result_label.config(font=("Calibri", 10, "bold"), fg="green")
 
 
 
 
 
-
-# Functions
+# -------------------------------
+# Calculator functions
+# -------------------------------
 def add_numbers():
     try:
         num1 = float(entry1.get())
         num2 = float(entry2.get())
-        result = num1 + num2
-        result_label.config(text=str(result))
+        result_label.config(text=str(num1 + num2))
     except ValueError:
         result_label.config(text="Invalid input!")
 
@@ -47,8 +55,7 @@ def subtract_numbers():
     try:
         num1 = float(entry1.get())
         num2 = float(entry2.get())
-        result = num1 - num2
-        result_label.config(text=str(result))
+        result_label.config(text=str(num1 - num2))
     except ValueError:
         result_label.config(text="Invalid input!")
 
@@ -57,8 +64,7 @@ def multiply_numbers():
     try:
         num1 = float(entry1.get())
         num2 = float(entry2.get())
-        result = num1 * num2
-        result_label.config(text=str(result))
+        result_label.config(text=str(num1 * num2))
     except ValueError:
         result_label.config(text="Invalid input!")
 
@@ -70,48 +76,77 @@ def divide_numbers():
         if num2 == 0:
             result_label.config(text="Cannot divide by zero!")
         else:
-            result = num1 / num2
-            result_label.config(text=str(result))
+            result_label.config(text=str(num1 / num2))
     except ValueError:
         result_label.config(text="Invalid input!")
 
 
-def on_enter(e):
-    e.widget['background'] = "lightblue"
-
-
-def on_leave(e):
-    e.widget['background'] = "SystemButtonFace"
 
 
 
 
 
-# Buttons
-add_button = tk.Button(root, text="+", command=add_numbers, width=5)
-add_button.grid(row=3, column=0, padx=2, pady=2)
-
-sub_button = tk.Button(root, text="-", command=subtract_numbers, width=5)
-sub_button.grid(row=3, column=1, padx=2, pady=2)
-
-multiply_button = tk.Button(root, text="*", command=multiply_numbers, width=5)
-multiply_button.grid(row=3, column=2, padx=2, pady=2)
-
-divide_button = tk.Button(root, text="/", command=divide_numbers, width=5)
-divide_button.grid(row=3, column=3, padx=2, pady=2)
-
-
+# -------------------------------
+# Button customization settings
+# -------------------------------
+BUTTON_CONFIG = {
+    "width": 3,
+    "height": 1,
+    "font": ("Arial", 10, "bold"),
+    "bg": "#e0e0e0",
+    "fg": "black",
+    "hover_bg": "lightblue",
+    "hover_fg": "black"
+}
 
 
 
 
 
-# Hover effects
-for btn in [add_button, sub_button, multiply_button, divide_button]:
+def create_button(parent, text, command, row, column):
+    btn = tk.Button(parent, text=text, command=command,
+                    width=BUTTON_CONFIG["width"],
+                    height=BUTTON_CONFIG["height"],
+                    font=BUTTON_CONFIG["font"],
+                    bg=BUTTON_CONFIG["bg"],
+                    fg=BUTTON_CONFIG["fg"])
+    btn.grid(row=row, column=column, padx=5, pady=5)
+
+    # Hover effects
+    def on_enter(e):
+        e.widget['background'] = BUTTON_CONFIG["hover_bg"]
+        e.widget['fg'] = BUTTON_CONFIG["hover_fg"]
+
+    def on_leave(e):
+        e.widget['background'] = BUTTON_CONFIG["bg"]
+        e.widget['fg'] = BUTTON_CONFIG["fg"]
+
     btn.bind("<Enter>", on_enter)
     btn.bind("<Leave>", on_leave)
+    return btn
 
 
 
 
+
+# -------------------------------
+# Buttons
+# -------------------------------
+buttons = [
+    ("+", add_numbers),
+    ("-", subtract_numbers),
+    ("*", multiply_numbers),
+    ("/", divide_numbers)
+]
+
+for idx, (symbol, func) in enumerate(buttons):
+    create_button(root, symbol, func, row=3, column=idx)
+
+
+
+
+
+# -------------------------------
+# Run application
+# -------------------------------
 root.mainloop()
