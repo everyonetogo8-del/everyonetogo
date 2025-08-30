@@ -1,5 +1,8 @@
 import tkinter as tk
 
+
+
+
 # -------------------------------
 # Root window
 # -------------------------------
@@ -34,8 +37,6 @@ result_label.grid(row=2, column=0, columnspan=4, pady=5, sticky="ew")
 entry1.config(bg="#f0f0f0", font=("Calibri", 10, "bold"))
 entry2.config(bg="#f0f0f0", font=("Calibri", 10, "bold"))
 result_label.config(font=("Calibri", 10, "bold"), fg="green")
-
-
 
 
 
@@ -81,7 +82,8 @@ def divide_numbers():
         result_label.config(text="Invalid input!")
 
 
-
+def on_enter(e):
+    e.widget['background'] = "lightblue"
 
 
 
@@ -100,6 +102,11 @@ BUTTON_CONFIG = {
 }
 
 
+
+
+# -------------------------------
+# Button creation with hover effects
+# -------------------------------
 
 
 
